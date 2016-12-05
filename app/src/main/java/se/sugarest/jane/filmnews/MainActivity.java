@@ -58,17 +58,24 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         View loadingIndicator = findViewById(R.id.loading_spinner);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No Film News found."
-        mEmptyStateTextView.setText(R.string.no_filmNews);
-
         // Clear the adapter of previous filmNews data
         mAdapter.clear();
         Log.i(LOG_TAG, "onLoadFinished");
 
-        // If there is a valid list of {@link FilmNews}es, then add them to the adapter's
-        // data set. This will trigger the ListView to update.
-        if (filmNewses != null && !filmNewses.isEmpty()) {
-            mAdapter.addAll(filmNewses);
+        //If there is a network connection, fetch data
+        if (getNetworkInfo() != null && getNetworkInfo().isConnected()) {
+
+            // If there is a valid list of {@link FilmNews}es, then add them to the adapter's
+            // data set. This will trigger the ListView to update.
+            if (filmNewses != null && !filmNewses.isEmpty()) {
+                mAdapter.addAll(filmNewses);
+            } else {
+                // Set empty state text to display "No Film News found."
+                mEmptyStateTextView.setText(R.string.no_filmNews);
+            }
+        } else {
+            //Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet);
         }
     }
 
@@ -113,15 +120,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         filmNewsListView.setEmptyView(mEmptyStateTextView);
 
-        //Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        //Get details on the currently active default data network
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
         //If there is a network connection, fetch data
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (getNetworkInfo() != null && getNetworkInfo().isConnected()) {
             //Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
@@ -139,7 +139,14 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             //Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet);
         }
-
     }
 
+    private NetworkInfo getNetworkInfo() {
+        //Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //Return details on the currently active default data network
+        return connMgr.getActiveNetworkInfo();
+    }
 }
