@@ -134,9 +134,12 @@ public class QueryUtils {
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(filmNewsJSON);
 
-            // Extract the JSONArray associated with the key called "response",
-            // which represents a list of response (or filmNews).
-            JSONArray filmNewsArray = baseJsonResponse.getJSONArray("response");
+            // Extract the JSONObject associated with the key called "response",
+            JSONObject response = baseJsonResponse.getJSONObject("response");
+
+            // Extract the JSONArray associated with the key called "results",
+            // which represents a list of results (or filmNews).
+            JSONArray filmNewsArray = response.getJSONArray("results");
 
             // For each filmNews in the filmNewsArray, create a {@link FilmNews} object
             for (int i = 0; i < filmNewsArray.length(); i++) {
@@ -144,22 +147,17 @@ public class QueryUtils {
                 // Get a single filmNews at position i within the list of filmNews
                 JSONObject currentFilmNews = filmNewsArray.getJSONObject(i);
 
-                // For a given filmNews, extract the JSONObject associated with the
-                // key called "results", which represents a list of all results
-                // for that filmNews.
-                JSONObject results = currentFilmNews.getJSONObject("results");
-
                 // Extract the value for the key called "webTitle"
-                String articleTitle = results.getString("webTitle");
+                String articleTitle = currentFilmNews.getString("webTitle");
 
                 // Extract the value for the key called "sectionName"
-                String sectionName = results.getString("sectionName");
+                String sectionName = currentFilmNews.getString("sectionName");
 
                 // Extract the value for the key called "webPublicationDate"
-                String publishDate = results.getString("webPublicationDate");
+                String publishDate = currentFilmNews.getString("webPublicationDate");
 
                 // Extract the value for the key called "webUrl"
-                String url = results.getString("webUrl");
+                String url = currentFilmNews.getString("webUrl");
 
                 // Create a new {@link FilmNews} object with the articleTitle, sectionName, publishDate,
                 // and url from the JSON response.
