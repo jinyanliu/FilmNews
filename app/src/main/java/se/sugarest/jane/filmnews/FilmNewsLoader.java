@@ -2,7 +2,6 @@ package se.sugarest.jane.filmnews;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
 
@@ -40,7 +39,6 @@ public class FilmNewsLoader extends AsyncTaskLoader<List<FilmNews>> {
     @Override
     protected void onStartLoading() {
         forceLoad();
-        Log.i(LOG_TAG, "onStartLoading");
     }
 
     /**
@@ -51,9 +49,6 @@ public class FilmNewsLoader extends AsyncTaskLoader<List<FilmNews>> {
         if (mUrl == null) {
             return null;
         }
-
-        Log.i(LOG_TAG, "loadInBackground");
-
         //Perform the network request, parse the response, and extract a list of filmNewses.
         List<FilmNews> filmNewses = QueryUtils.fetchFilmNewsData(mUrl);
         return filmNewses;
