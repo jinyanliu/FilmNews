@@ -29,7 +29,6 @@ public class QueryUtils {
      */
     private static final String LOG_TAG = QueryUtils.class.getName();
 
-
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
      * This class is only meant to hold static variables and methods, which can be accessed
@@ -185,8 +184,6 @@ public class QueryUtils {
 
         // Create URL object
         URL url = createUrl(requestUrl);
-
-        Log.i(LOG_TAG, "fetchFilmNewsData");
 
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
