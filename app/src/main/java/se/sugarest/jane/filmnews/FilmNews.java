@@ -4,6 +4,10 @@ package se.sugarest.jane.filmnews;
  * Created by jane on 12/5/16.
  */
 
+/**
+ * Represents an FilmNews article.
+ * It contains the article title, section name, publish date and detail webUrl of an article.
+ */
 public class FilmNews {
 
     /**
