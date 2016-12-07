@@ -54,23 +54,43 @@ public class FilmNewsAdapter extends ArrayAdapter<FilmNews> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Check is the existing view is being reused, otherwise inflate the view
+        //Declare the view holder
+        ViewHolder holder;
+
+        //Check if the existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.list_item, parent, false);
+
+            //fresh view, so no view holder attached to it
+            //so initialize view holder
+            holder = new ViewHolder();
+
+            //Update the view references in the view holder
+            //with the elements from inflated view
+            //Find the TextView in the list_item.xml layout with the ID article_title
+            holder.articleTitleTextView = (TextView) convertView.findViewById(R.id.article_title);
+            //Find the TextView in the list_item.xml layout with the ID section_name
+            holder.sectionNameTextView = (TextView) convertView.findViewById(R.id.section_name);
+            //Find the TextView in the list_item.xml layout with the ID publish_date
+            holder.publishDateTextView = (TextView) convertView.findViewById(R.id.publish_date);
+
+            //save the reference to the view holder in the view
+            //via setTag
+            convertView.setTag(holder);
+        } else {
+            //recycled view
+            //so just get the holder reference form the view via getTag
+            //no need for findViewById calls
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        //Get the FilmNews object located at this position in the list
+        //Get the current item
         FilmNews currentFilmNews = getItem(position);
 
-        ViewHolder holder = new ViewHolder();
-        //Find the TextView in the list_item.xml layout with the ID article_title
-        holder.articleTitleTextView = (TextView) convertView.findViewById(R.id.article_title);
-        //Display the title of the current article in that TextView.
+        //Perform operations on the view elements
+        //using the references from view holder
         holder.articleTitleTextView.setText(currentFilmNews.getArticleTitle());
-        //Find the TextView in the list_item.xml layout with the ID section_name
-        holder.sectionNameTextView = (TextView) convertView.findViewById(R.id.section_name);
-        //Display the section name of the current article in that TextView.
         holder.sectionNameTextView.setText(currentFilmNews.getSectionName());
 
         //Split the publish date string of the current article from DATE_SEPARATOR
@@ -89,15 +109,9 @@ public class FilmNewsAdapter extends ArrayAdapter<FilmNews> {
             Log.e(LOG_TAG, "Problem formatting Date Object.", e);
         }
 
-        //Find the TextView in the list_item.xml layout with the ID publish_date
-        holder.publishDateTextView = (TextView) convertView.findViewById(R.id.publish_date);
-        //Display the formatted publish date of the current article in that TextView. (i.e. "Mar 3, 2016")
         holder.publishDateTextView.setText(formattedDate);
 
-        convertView.setTag(holder);
-
-        //Return the list_item view layout (containing 3 TextViews)
-        //so that it can be shown in the ListView
+        //Return this view
         return convertView;
     }
 }
