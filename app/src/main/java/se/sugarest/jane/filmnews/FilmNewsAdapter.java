@@ -80,7 +80,7 @@ public class FilmNewsAdapter extends ArrayAdapter<FilmNews> {
             convertView.setTag(holder);
         } else {
             //recycled view
-            //so just get the holder reference form the view via getTag
+            //so just get the holder reference from the view via getTag
             //no need for findViewById calls
             holder = (ViewHolder) convertView.getTag();
         }
