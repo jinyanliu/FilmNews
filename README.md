@@ -16,6 +16,6 @@ Exceptions like no network connection, no expected data are handled.
 Java string splitting and date formatting are covered. 
 
 # App ScreenShots
-<img src="screenshots/FilmNewsList.png" width="25%" alt="Film news list"/> <img src="screenshots/NewsOnWebsite.png" width="25%" alt="News on its website"/> <img src="screenshots/NoInternetConnection.png" width="25%" alt="No network connection"/>
+<img src="screenshots/FilmNewsList.png" width="24%" alt="Film news list"/> <img src="screenshots/NewsOnWebsite.png" width="24%" alt="News on its website"/> <img src="screenshots/NoInternetConnection.png" width="24%" alt="No network connection"/>
 
 <img src="screenshots/LandscapeView.png" width="50%" alt="Landscape view"/>
